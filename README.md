@@ -1,38 +1,31 @@
-# Easy Layers
+![Easy Layers](logo.jpg)
 Make Models Faster with solely torch-based modules
+
+[![PyPI version](https://img.shields.io/pypi/v/easy_layers.svg?label=pypi%20(stable))](https://pypi.org/project/easy_layers/)
+[![Python Versions](https://img.shields.io/pypi/pyversions/easy_layers.svg)](https://pypi.org/project/easy_layers/)
+
+Easy Layers provides a collection of PyTorch-based neural network modules designed for simplicity and efficiency. The library includes einsum operations, activation functions, feed forward layers, and normalization techniques - all optimized for performance.
 
 ## Installation
 
-### From PyPI (once published)
 ```bash
+# install from PyPI
 pip install easy_layers
 ```
 
-### From source
+Or install from source:
+
 ```bash
 git clone https://github.com/axion66/easy_layers.git
 cd easy_layers
 pip install -e .
 ```
 
-## Overview
+## Usage
 
-Easy Layers provides a collection of PyTorch-based neural network modules designed for simplicity and efficiency. The library includes:
-
-- **Einsum Operations**: Unified interface for tensor operations using einsum notation and einops for reshaping
-- **Activation Functions**: Various activation functions including GELU, SiLU, ReLU, and gated variants
-- **Feed Forward Layers**: Configurable feed forward neural network layers
-- **Normalization Layers**: Implementations of normalization techniques like RMSNorm
-
-## Modules
+The library includes several modules for different neural network components:
 
 ### nn.einsum
-
-The `einsum` module provides tools for tensor operations using Einstein summation notation and einops for reshaping.
-
-#### UltEinsum
-
-A versatile module that supports both reshaping operations (using einops.rearrange) and tensor multiplication (using torch.einsum).
 
 ```python
 from easy_layers.nn.einsum import UltEinsum
@@ -52,16 +45,6 @@ result = UltEinsum.multiply("ik,kj->ij", tensor_a, tensor_b)
 
 ### nn.activations
 
-The `activations` module provides various activation functions for neural networks.
-
-#### Activation Classes
-
-- `GELU`: Gaussian Error Linear Unit
-- `SiLU`: Sigmoid Linear Unit (also known as Swish)
-- `ReLU`: Rectified Linear Unit
-- `GEGLU`: Gated GELU
-- `SWIGLU`: Gated SiLU (SwiGLU)
-
 ```python
 from easy_layers.nn.activations.acts import Activation, GELU, SiLU, ReLU, GEGLU, SWIGLU
 
@@ -75,12 +58,6 @@ output = activation(input_tensor)
 ```
 
 ### nn.layers
-
-The `layers` module provides neural network layer implementations.
-
-#### FeedForward
-
-A configurable feed forward neural network layer with support for various activation functions.
 
 ```python
 from easy_layers.nn.layers.layer import FeedForward
@@ -105,12 +82,6 @@ output = ff_layer(input_tensor)
 
 ### nn.norms
 
-The `norms` module provides normalization layers for neural networks.
-
-#### RMSNorm
-
-Root Mean Square Normalization, useful for transformer architectures.
-
 ```python
 from easy_layers.nn.norms.rms import RMSNorm
 
@@ -121,9 +92,9 @@ rms_norm = RMSNorm(heads=8, dim=512)
 normalized = rms_norm(input_tensor)
 ```
 
-## Examples
+## Documentation
 
-The `examples` directory contains example scripts demonstrating the usage of each module:
+The full API documentation can be found in the code docstrings. Example scripts are provided in the `examples` directory:
 
 - `einsum_example.py`: Demonstrates the UltEinsum module
 - `activations_example.py`: Demonstrates the activation functions
@@ -139,7 +110,45 @@ python examples/feedforward_example.py
 python examples/rmsnorm_example.py
 ```
 
-## Development
+## Modules
+
+### nn.einsum
+
+The `einsum` module provides tools for tensor operations using Einstein summation notation and einops for reshaping.
+
+#### UltEinsum
+
+A versatile module that supports both reshaping operations (using einops.rearrange) and tensor multiplication (using torch.einsum).
+
+### nn.activations
+
+The `activations` module provides various activation functions for neural networks.
+
+#### Activation Classes
+
+- `GELU`: Gaussian Error Linear Unit
+- `SiLU`: Sigmoid Linear Unit (also known as Swish)
+- `ReLU`: Rectified Linear Unit
+- `GEGLU`: Gated GELU
+- `SWIGLU`: Gated SiLU (SwiGLU)
+
+### nn.layers
+
+The `layers` module provides neural network layer implementations.
+
+#### FeedForward
+
+A configurable feed forward neural network layer with support for various activation functions.
+
+### nn.norms
+
+The `norms` module provides normalization layers for neural networks.
+
+#### RMSNorm
+
+Root Mean Square Normalization, useful for transformer architectures.
+
+## Development 
 
 ### Build the package
 ```bash
@@ -150,10 +159,4 @@ python -m build
 ### Install in development mode
 ```bash
 pip install -e .
-```
-
-### Publishing to PyPI
-```bash
-pip install twine
-twine upload dist/*
 ```
