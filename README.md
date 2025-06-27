@@ -10,19 +10,133 @@ pip install easy_layers
 
 ### From source
 ```bash
-git clone https://github.com/yourusername/easy_layers.git
+git clone https://github.com/axion66/easy_layers.git
 cd easy_layers
 pip install -e .
 ```
 
-## Usage
+## Overview
+
+Easy Layers provides a collection of PyTorch-based neural network modules designed for simplicity and efficiency. The library includes:
+
+- **Einsum Operations**: Unified interface for tensor operations using einsum notation and einops for reshaping
+- **Activation Functions**: Various activation functions including GELU, SiLU, ReLU, and gated variants
+- **Feed Forward Layers**: Configurable feed forward neural network layers
+- **Normalization Layers**: Implementations of normalization techniques like RMSNorm
+
+## Modules
+
+### nn.einsum
+
+The `einsum` module provides tools for tensor operations using Einstein summation notation and einops for reshaping.
+
+#### UltEinsum
+
+A versatile module that supports both reshaping operations (using einops.rearrange) and tensor multiplication (using torch.einsum).
 
 ```python
-from easy_layers.layers import Layer
+from easy_layers.nn.einsum import UltEinsum
 
-# Create a basic layer
-layer = Layer(name="my_layer")
-output = layer(input_data)
+# Reshape operation (using einops pattern)
+reshape_op = UltEinsum("b c -> c b", mode='r')
+transposed = reshape_op(tensor)
+
+# Matrix multiplication (using einsum notation)
+matmul_op = UltEinsum("ik,kj->ij", mode='m')
+result = matmul_op(tensor_a, tensor_b)
+
+# Static methods
+transposed = UltEinsum.reshape("h w -> w h", tensor)
+result = UltEinsum.multiply("ik,kj->ij", tensor_a, tensor_b)
+```
+
+### nn.activations
+
+The `activations` module provides various activation functions for neural networks.
+
+#### Activation Classes
+
+- `GELU`: Gaussian Error Linear Unit
+- `SiLU`: Sigmoid Linear Unit (also known as Swish)
+- `ReLU`: Rectified Linear Unit
+- `GEGLU`: Gated GELU
+- `SWIGLU`: Gated SiLU (SwiGLU)
+
+```python
+from easy_layers.nn.activations.acts import Activation, GELU, SiLU, ReLU, GEGLU, SWIGLU
+
+# Using individual activation classes
+gelu = GELU()
+output = gelu(input_tensor)
+
+# Using the unified Activation interface
+activation = Activation("gelu")  # Options: "gelu", "silu", "relu", "geglu", "swiglu"
+output = activation(input_tensor)
+```
+
+### nn.layers
+
+The `layers` module provides neural network layer implementations.
+
+#### FeedForward
+
+A configurable feed forward neural network layer with support for various activation functions.
+
+```python
+from easy_layers.nn.layers.layer import FeedForward
+
+# Basic usage
+ff_layer = FeedForward(
+    in_features=512,
+    activation="geglu"  # Default activation
+)
+
+# Custom configuration
+ff_custom = FeedForward(
+    in_features=512,
+    out_features=256,  # Different output dimension
+    hidden_features=1024,  # Custom hidden dimension
+    dropout=0.1,  # Custom dropout rate
+    activation="swiglu"  # Different activation
+)
+
+output = ff_layer(input_tensor)
+```
+
+### nn.norms
+
+The `norms` module provides normalization layers for neural networks.
+
+#### RMSNorm
+
+Root Mean Square Normalization, useful for transformer architectures.
+
+```python
+from easy_layers.nn.norms.rms import RMSNorm
+
+# Create RMSNorm layer
+rms_norm = RMSNorm(heads=8, dim=512)
+
+# Apply normalization
+normalized = rms_norm(input_tensor)
+```
+
+## Examples
+
+The `examples` directory contains example scripts demonstrating the usage of each module:
+
+- `einsum_example.py`: Demonstrates the UltEinsum module
+- `activations_example.py`: Demonstrates the activation functions
+- `feedforward_example.py`: Demonstrates the FeedForward layer
+- `rmsnorm_example.py`: Demonstrates the RMSNorm module
+
+Run the examples:
+
+```bash
+python examples/einsum_example.py
+python examples/activations_example.py
+python examples/feedforward_example.py
+python examples/rmsnorm_example.py
 ```
 
 ## Development
@@ -36,4 +150,10 @@ python -m build
 ### Install in development mode
 ```bash
 pip install -e .
+```
+
+### Publishing to PyPI
+```bash
+pip install twine
+twine upload dist/*
 ```

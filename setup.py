@@ -17,12 +17,12 @@ with open("README.md", encoding="utf-8") as f:
 setup(
     name="easy_layers",
     version=version,
-    author="Your Name",
-    author_email="your.email@example.com",
+    author="Jinseop Song",
+    author_email="ssongjinseob@gmail.com",
     description="A simple neural network layers library",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/yourusername/easy_layers",
+    url="https://github.com/axion66/easy_layers",
     packages=find_packages(),
     classifiers=[
         "Programming Language :: Python :: 3",
@@ -31,6 +31,7 @@ setup(
     ],
     python_requires=">=3.6",
     install_requires=[
-        # Add your dependencies here
+        "torch>=1.7.0",
+        "einops>=0.3.0",
     ],
 ) 
