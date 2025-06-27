@@ -3,6 +3,7 @@ Make Models Faster with solely torch-based modules
 
 [![PyPI version](https://img.shields.io/pypi/v/easy_layers.svg?label=pypi%20(stable))](https://pypi.org/project/easy_layers/)
 [![Python Versions](https://img.shields.io/pypi/pyversions/easy_layers.svg)](https://pypi.org/project/easy_layers/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 Easy Layers provides a collection of PyTorch-based neural network modules designed for simplicity and efficiency. The library includes einsum operations, activation functions, feed forward layers, and normalization techniques - all optimized for performance.
 
@@ -160,3 +161,7 @@ python -m build
 ```bash
 pip install -e .
 ```
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
