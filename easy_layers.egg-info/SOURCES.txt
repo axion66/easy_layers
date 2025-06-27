@@ -1,0 +1,11 @@
+LICENSE
+MANIFEST.in
+README.md
+pyproject.toml
+setup.py
+easy_layers/__init__.py
+easy_layers/layers.py
+easy_layers.egg-info/PKG-INFO
+easy_layers.egg-info/SOURCES.txt
+easy_layers.egg-info/dependency_links.txt
+easy_layers.egg-info/top_level.txt
